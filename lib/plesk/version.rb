@@ -1,4 +1,4 @@
 module Plesk
-  VERSION = "0.0.1"
+  VERSION = File.open("VERSION").read.strip
 
 end

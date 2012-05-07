@@ -1,4 +1,5 @@
 *.gem
+.cache_rake
 *.rbc
 .bundle
 .config
