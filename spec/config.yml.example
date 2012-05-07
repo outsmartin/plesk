@@ -1,0 +1,4 @@
+---
+user: admin
+password: panel
+path: "https://plesk10-simple.demo.parallels.com:8443/enterprise/control/agent.php"
