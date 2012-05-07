@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["info@outsmartin.de"]
   gem.description   = %q{Plesk RPC API wrapper written in Ruby }
   gem.summary       = %q{You can communicate with your Plesk System through the RPC API. Sends XML and recieves XML for your pleasure.}
-  gem.homepage      = "outsmartin.de"
+  gem.homepage      = "http://github.com/outsmartin/plesk"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
