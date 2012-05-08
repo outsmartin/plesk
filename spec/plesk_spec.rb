@@ -37,11 +37,12 @@ describe "Plesk" do
   it "should get a mailgroup list for a mail" do
     mails = api.get_mailgroup_info_for "developer@pludoni.de"
     mails.should be_kind_of Array
+    mails.count.should > 0
   end
   it "should set mailgroup for a mail" do
-    mails_to_set = ["stefan.wienert@pludoni.de","akos.toth@pludoni.de","martin.schneider@pludoni.de"]
-    answer = api.set_mailgroup_for "developer@pludoni.de", mails_to_set
-    answer.at('status').text.should == "ok"
+    #mails_to_set = ["stefan.wienert@pludoni.de","akos.toth@pludoni.de","martin.schneider@pludoni.de"]
+    #answer = api.set_mailgroup_for "developer@pludoni.de", mails_to_set
+    #answer.at('status').text.should == "ok"
   end
   it "should be able to retrieve the api secret" do
     #ip = "46.4.99.113"

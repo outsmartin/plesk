@@ -2,7 +2,7 @@
 module Plesk
   class Packet
     attr_accessor :content
-    def initialize version="1.4.1.2"
+    def initialize version="1.4.2.0"
       @content = Nokogiri::XML::Builder.new do |xml|
         xml.packet(version: version)
       end.doc
@@ -37,6 +37,31 @@ module Plesk
         }
       end
     end
+
+    def mailgroup_general action, id, name, enabled, mails
+      doc = @content
+      @content =Nokogiri::XML::Builder.with(doc.at('packet')) do |xml|
+        xml.mail do
+          xml.update do
+            xml.send(action) do
+              xml.filter do
+                xml.domain_id id
+                xml.mailname do
+                  xml.name name
+                  xml.mailgroup do
+                    xml.enabled enabled
+                    mails.each do |mail|
+                      xml.address mail
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+
+    end
     def mailgroup_info name,id
       doc = @content
       @content =Nokogiri::XML::Builder.with(doc.at('packet')) do |xml|
@@ -62,7 +87,7 @@ module Plesk
           xml.mailname {
             xml.name name
             xml.mailgroup {
-              xml.enabled :true
+              xml.enabled 'true'
               mails.each do |mail|
                 xml.address mail
               end

@@ -38,13 +38,14 @@ module Plesk
     def get_mailgroup_info_for mail
       name,domain = mail.split("@")
       domain_id = get_domain_id_for domain
-      packet = Packet.new
+      packet = Packet.new "1.4.1.2"
       packet.mailgroup_info name,domain_id
-      answer = start_request packet.to_xml
-
+      xml = packet.to_xml
+      answer = start_request xml
       answer.search('address').map(&:text)
     end
     def set_mailgroup_for mail,mails
+      raise "Do not use set, Plesk setting of mailgroups seems to be broken. User reset_mailgroups instead"
       name,domain = mail.split("@")
       domain_id = get_domain_id_for domain
       packet = Packet.new
@@ -72,6 +73,20 @@ module Plesk
       Nokogiri::XML(response.body)
     end
 
+
+    def reset_mailgroups(mail_group_name,  new_mails)
+      name,domain = mail_group_name.split("@")
+      domain_id = get_domain_id_for domain
+      old_mails = get_mailgroup_info_for mail_group_name
+      p old_mails
+
+      packet = Packet.new
+      start_request packet.mailgroup_general("remove", domain_id, name, "false" , old_mails).to_xml
+      if new_mails.count > 0
+        packet = Packet.new
+        start_request packet.mailgroup_general("add", domain_id, name, "true" , new_mails).to_xml
+      end
+    end
     private
 
     def get_domain_info
