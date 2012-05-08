@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'gli'
   gem.add_development_dependency 'guard-rspec'
+  gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.version       = Plesk::VERSION
 end
