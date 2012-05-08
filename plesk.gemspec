@@ -14,5 +14,8 @@ Gem::Specification.new do |gem|
   gem.name          = "plesk"
   gem.require_paths = ["lib"]
   gem.add_dependency 'nokogiri'
+  gem.add_dependency 'gli'
+  gem.add_development_dependency 'guard-rspec'
+  gem.add_development_dependency 'rspec'
   gem.version       = Plesk::VERSION
 end

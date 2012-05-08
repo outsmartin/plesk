@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+# for 1.8.7 compat
+unless File.respond_to? :realpath
+  class File #:nodoc:
+    def self.realpath path
+      return realpath(File.readlink(path)) if symlink?(path)
+      path
+    end
+  end
+end
+$: << File.expand_path(File.dirname(File.realpath(__FILE__)) + '/../lib')
+
+require 'plesk'
+require 'gli'
+
+include GLI
+
+program_desc 'Use ./plesk to get your api key from your plesk instance.'
+
+version Plesk::VERSION
+
+#desc 'Describe some switch here'
+#switch [:s,:switch]
+
+#desc 'Describe some flag here'
+#default_value 'the default'
+#arg_name 'The name of the argument'
+#flag [:f,:flagname]
+
+desc 'Get your api key for the IP which will use the gem, so you dont have to use your login information for future use.'
+arg_name 'You have to provide your hostname and your credentials.'
+command :key do |c|
+  c.action do |global_options,options,args|
+    if args.length < 4
+      raise 'Usage: ./plesk key <hostname> <user> <password> <ip_address>'
+    end
+    client = Plesk::Client.new(*args[0..2])
+    puts client.get_secret_for_ip args[3]
+  end
+end
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abort and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+exit GLI.run(ARGV)
+
