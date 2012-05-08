@@ -45,7 +45,7 @@ module Plesk
       answer.search('address').map(&:text)
     end
     def set_mailgroup_for mail,mails
-      raise "Do not use set, Plesk setting of mailgroups seems to be broken. User reset_mailgroups instead"
+      raise "Do not use set, Plesk setting of mailgroups seems to be broken. User reset_mailgroup instead"
       name,domain = mail.split("@")
       domain_id = get_domain_id_for domain
       packet = Packet.new
@@ -74,7 +74,7 @@ module Plesk
     end
 
 
-    def reset_mailgroups(mail_group_name,  new_mails)
+    def reset_mailgroup(mail_group_name,  new_mails)
       name,domain = mail_group_name.split("@")
       domain_id = get_domain_id_for domain
       old_mails = get_mailgroup_info_for mail_group_name
